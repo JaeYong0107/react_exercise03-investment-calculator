@@ -10,7 +10,7 @@ const INITIAL_VALUE = {
 
 export default function UserInput() {
 
-    const [userInput, setUserInput] = useStete(INITIAL_VALUE);
+    const [userInput, setUserInput] = useState(INITIAL_VALUE);
 
     function handleChange(e) {
         setUserInput(e.target.value);
