@@ -1,6 +1,23 @@
 import { calculateInvestmentResults, formatter } from "../util/investment"
 
-export default function Result() {
+export default function Result({ inputs }) {
+
+    const results = [];
+    let [totalInterest, investedCapital] = [0, inputs.initialInvestment];
+    for (const result of calculateInvestmentResults(inputs)) {
+        totalInterest += result['interest'];
+        investedCapital += result['annualInvestment'];
+        results.push(
+            <tr key={result['year']}>
+                <td>{result['year']}</td>
+                <td>{formatter.format(result['valueEndOfYear'])}</td>
+                <td>{formatter.format(result['interest'])}</td>
+                <td>{formatter.format(totalInterest)}</td>
+                <td>{formatter.format(investedCapital)}</td>
+            </tr>
+        );
+    }
+
     return (
         <table id="result">
             <thead>
@@ -13,13 +30,7 @@ export default function Result() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>{formatter.format(10000)}</th>
-                    <th>{formatter.format(1000)}</th>
-                    <th>{formatter.format(1000)}</th>
-                    <th>{formatter.format(10000)}</th>
-                </tr>
+                {results}
             </tbody>
         </table>
     )
